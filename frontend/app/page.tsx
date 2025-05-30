@@ -1,5 +1,6 @@
 "use client";
 
+import Chat from "@/components/Chat";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@auth0/nextjs-auth0";
 
@@ -27,6 +28,7 @@ export default function Page() {
   return (
     <main className="flex flex-col items-center justify-center h-screen p-10">
       <h1>Welcome, {user.name}!</h1>
+      <Chat />
       <p>
         <a href="/auth/logout">
           <Button>Log out</Button>
