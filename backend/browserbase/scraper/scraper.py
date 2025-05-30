@@ -8,12 +8,7 @@ import time
 from bs4 import BeautifulSoup
 import pandas as pd
 
-def run_scraper(username, password, query):
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option("detach", True)
-    options.add_argument("window-size=1920,1080") 
-
-    driver = webdriver.Chrome(options=options)
+def run_scraper(username, password, query, driver):
     wait = WebDriverWait(driver,10)
     try:
         driver.get("https://www.merx.com/")
@@ -47,11 +42,11 @@ def run_scraper(username, password, query):
         results = parse_solicitations(table_html)
         df = pd.DataFrame(results)
         print(df.head())
-        df.to_json("./outputs.json")
+        df.to_json("./outputs.json",orient="records")
         
         return results
     finally:
-        pass
+        driver.quit()
 
 
 def close_login_messages(driver):
@@ -106,6 +101,6 @@ def parse_solicitations(html):
     return results
 
 if __name__ == "__main__":
-    email = "cathrine.secilia@msitip.com"
+    email = ""
     #email ="augustus.nasiah@msitip"
-    run_scraper(email,"Fcgdaeb1012345!","financial advisory")
+    run_scraper(email,"pass","financial advisory")
