@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Settings } from 'lucide-react';
+import { Search, Settings } from 'lucide-react';
 import { searchBrowserBase } from '@/lib/browserbase';
 import { DataTable } from './table/datatable';
 
@@ -25,10 +25,10 @@ export default function SettingsForm() {
     };
 
     return (
-        <div>
+        <div className='w-full h-full'>
             <div className="max-w-5xl w-full mx-auto mt-10 p-6 bg-sky-50 rounded-2xl shadow-lg border border-sky-100">
                 <div className="flex items-center gap-3 mb-6 text-sky-800">
-                    <Settings className="w-6 h-6" />
+                    <Search className="w-6 h-6" />
                     <h2 className="text-2xl font-bold">Search MERX</h2>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -74,15 +74,18 @@ export default function SettingsForm() {
                         />
                     </div>
                     <Button type="submit" className="bg-sky-600 hover:bg-sky-700">
-                        Save Settings
+                        Search
                     </Button>
                 </form>
             </div>
-            {results.results && <DataTable data={results.results} />}
-            {results.recommendation &&
-                <pre>
-                    {JSON.stringify(results.recommendation)}
-                </pre>
+            {results && <>
+                {results.results && <DataTable data={results.results} />}
+                {results.recommendation &&
+                    <pre className="whitespace-pre-wrap break-words bg-gray-100 p-4 rounded-md text-sm overflow-auto max-w-full">
+                        {JSON.stringify(results.recommendation[0].message.content)}
+                    </pre>
+                }
+            </>
             }
         </div>
     );

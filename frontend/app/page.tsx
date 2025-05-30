@@ -27,14 +27,24 @@ export default function Page() {
 
   // If user exists, show a welcome message and logout button.
   return (
-    <main className="flex flex-col items-center justify-center h-screen p-10">
-      <h1>Welcome, {user.name}!</h1>
-      <SettingsForm />
-      <p>
-        <a href="/auth/logout">
-          <Button>Log out</Button>
-        </a>
-      </p>
+    <main className="w-full  flex flex-col items-center justify-center min-h-screen bg-sky-50 p-8">
+      <div className="w-full bg-white shadow-xl rounded-2xl p-6 space-y-6">
+        <h1 className="text-2xl font-semibold text-sky-700 text-center">
+          Welcome, {user.name}!
+        </h1>
+
+        <div>
+          <SettingsForm />
+        </div>
+
+        <div className="text-center">
+          <a href="/auth/logout">
+            <Button className="bg-sky-500 hover:bg-sky-600 text-white font-medium px-4 py-2 rounded-md shadow">
+              Log out
+            </Button>
+          </a>
+        </div>
+      </div>
     </main>
   );
 }
