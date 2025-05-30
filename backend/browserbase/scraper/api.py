@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from tasks import scrape_and_store
-
+from bb import search
+import uvicorn
 app = FastAPI()
-
 class SearchRequest(BaseModel):
     username: str
     password: str
@@ -11,5 +10,8 @@ class SearchRequest(BaseModel):
 
 @app.post("/scrape")
 def trigger_scrape(req: SearchRequest):
-    scrape_and_store.delay(req.username, req.password, req.query)
-    return {"status": "Job submitted"}
+    res = search(req.username, req.password, req.query)
+    return {"status": "Job submitted","results":res}
+
+if __name__=="__main__":
+    uvicorn.run("api:app",host="0.0.0.0",port=3000, reload=True)

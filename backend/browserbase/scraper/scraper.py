@@ -7,6 +7,11 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 from bs4 import BeautifulSoup
 import pandas as pd
+from dotenv import load_dotenv
+import os
+load_dotenv()
+MERX_USERNAME=os.getenv("MERX_USERNAME")
+MERX_PASSWORD=os.getenv("MERX_PASSWORD")
 
 def run_scraper(username, password, query, driver):
     wait = WebDriverWait(driver,10)
@@ -33,20 +38,25 @@ def run_scraper(username, password, query, driver):
         search_box = driver.find_element(By.ID, "solicitationSingleBoxSearch")
         search_box.send_keys(query)
         search_box.send_keys(Keys.RETURN)
+        time.sleep(3)
 
         table = wait.until(
             EC.presence_of_element_located((By.ID, "solicitationsTable"))
         )
         table_html = table.get_attribute("outerHTML")
 
+        logout(driver, wait)
+
         results = parse_solicitations(table_html)
         df = pd.DataFrame(results)
         print(df.head())
         df.to_json("./outputs.json",orient="records")
         
+
+
         return results
     finally:
-        driver.quit()
+       pass
 
 
 def close_login_messages(driver):
@@ -58,6 +68,10 @@ def close_login_messages(driver):
         except Exception:
             break
 
+def logout(driver,wait):
+    account_icon = wait.until(EC.element_to_be_clickable((By.ID, "myAccountMenuLink"))
+        ).click()
+    driver.get('https://www.merx.com/public/authentication/logout')
 
 def parse_solicitations(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -101,6 +115,10 @@ def parse_solicitations(html):
     return results
 
 if __name__ == "__main__":
-    email = ""
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("detach", True)
+    options.add_argument("window-size=1920,1080") 
+
+    driver = webdriver.Chrome(options=options)
     #email ="augustus.nasiah@msitip"
-    run_scraper(email,"pass","financial advisory")
+    run_scraper(MERX_USERNAME,MERX_PASSWORD,"financial advisory",driver)
