@@ -1,0 +1,6 @@
+tips:
+Start with a workflow. Don't put in agents unless you have to
+Don't inject non determinism if you don't have to
+https://www.anthropic.com/engineering/building-effective-agents
+Clarity and decomposition can get you most of the way. Don't call a bunch of tools in one step, have a router.
+Look at data and evals to understand your systems

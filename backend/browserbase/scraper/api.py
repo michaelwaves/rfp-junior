@@ -8,7 +8,7 @@ class SearchRequest(BaseModel):
     password: str
     query: str
 
-@app.post("/scrape")
+@app.post("/scrape")    
 def trigger_scrape(req: SearchRequest):
     res = search(req.username, req.password, req.query)
     return {"status": "Job submitted","results":res}
