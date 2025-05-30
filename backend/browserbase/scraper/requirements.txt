@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+selenium
+celery
+redis
+sqlalchemy
+pydantic
+pandas
