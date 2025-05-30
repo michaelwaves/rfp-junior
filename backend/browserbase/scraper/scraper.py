@@ -52,9 +52,7 @@ def run_scraper(username, password, query, driver):
         print(df.head())
         df.to_json("./outputs.json",orient="records")
         
-
-
-        return results
+        return df.to_dict(orient="records")
     finally:
        pass
 
@@ -109,7 +107,7 @@ def parse_solicitations(html):
             'description': description_text,
             'closing_date': closing_date_text,
             'region': region_text,
-            'publication_date':publication_date
+            'publication_date':publication_date_text
         })
 
     return results

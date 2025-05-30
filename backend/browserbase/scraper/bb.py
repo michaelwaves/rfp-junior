@@ -28,13 +28,17 @@ class CustomRemoteConnection(RemoteConnection):
 
 def search(username, password, search_term:str):
   session = bb.sessions.create(project_id=os.environ["BROWSERBASE_PROJECT_ID"])
-  print(session)
+
+  live_view_links = bb.sessions.debug(session.id)
+  live_view_link = live_view_links.debuggerFullscreenUrl
+  print(live_view_link)
+
   custom_conn = CustomRemoteConnection(session.selenium_remote_url, session.signing_key)
   options = webdriver.ChromeOptions()
   driver = webdriver.Remote(custom_conn, options=options)
   results = run_scraper(username, password, search_term, driver)
   driver.quit()
-  return results
+  return {"results":results,"session_link":live_view_link}
 
 if __name__=="__main__":
     search("username/email","password","finance")
