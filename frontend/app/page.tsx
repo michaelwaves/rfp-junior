@@ -14,14 +14,27 @@ export default function Page() {
   // If no user, show sign-up and login buttons.
   if (!user) {
     return (
-      <main className="flex flex-col items-center justify-center h-screen p-10">
-        <a href="/auth/login?screen_hint=signup">
-          <Button>Sign up</Button>
-        </a>
-        <a href="/auth/login">
-          <Button>Log in</Button>
-        </a>
+      <main className="flex items-center justify-center min-h-screen bg-sky-50 p-6">
+        <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8 space-y-6 text-center">
+          <h1 className="text-2xl font-semibold text-sky-700">Welcome</h1>
+          <p className="text-gray-500">Get started by creating an account or logging in.</p>
+
+          <div className="space-y-4">
+            <a href="/auth/login?screen_hint=signup">
+              <Button className="w-full bg-sky-500 hover:bg-sky-600 text-white font-medium py-2 rounded-md shadow">
+                Sign up
+              </Button>
+            </a>
+
+            <a href="/auth/login">
+              <Button className="w-full bg-white text-sky-600 border border-sky-500 hover:bg-sky-100 font-medium py-2 rounded-md shadow">
+                Log in
+              </Button>
+            </a>
+          </div>
+        </div>
       </main>
+
     );
   }
 

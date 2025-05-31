@@ -12,7 +12,7 @@ client = openai.OpenAI(api_key=token)
 def recommend_rfps(rfps, context):
 
     # Gatekeep OpenAI calls with the one line code addition in the next line.
-    operant.ai.gatekeep(client, "openai") 
+    #operant.ai.gatekeep(client, "openai") 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         store=True,
